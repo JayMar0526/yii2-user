@@ -41,6 +41,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'attribute' => 'id',
             'headerOptions' => ['style' => 'width:90px;'], # 90px is sufficient for 5-digit user ids
         ],
+        'fullName',
         'username',
         'email:email',
         [

@@ -187,6 +187,8 @@ class User extends ActiveRecord implements IdentityInterface
     public function attributeLabels()
     {
         return [
+            'lastname'          => \Yii::t('user', 'Lastname'),
+            'firstname'         => \Yii::t('user', 'Firstname'),
             'username'          => \Yii::t('user', 'Username'),
             'email'             => \Yii::t('user', 'Email'),
             'registration_ip'   => \Yii::t('user', 'Registration ip'),
@@ -213,8 +215,8 @@ class User extends ActiveRecord implements IdentityInterface
         return ArrayHelper::merge($scenarios, [
             'register' => ['username', 'email', 'password'],
             'connect'  => ['username', 'email'],
-            'create'   => ['username', 'email', 'password'],
-            'update'   => ['username', 'email', 'password'],
+            'create'   => ['lastname', 'firstname', 'username', 'email', 'password'],
+            'update'   => ['lastname', 'firstname', 'username', 'email', 'password'],
             'settings' => ['username', 'email', 'password'],
         ]);
     }
@@ -223,6 +225,9 @@ class User extends ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
+            'lastnameRequired' => ['lastname', 'required', 'on' => ['create', 'update']],
+            'firstnameRequired' => ['firstname', 'required', 'on' => ['create', 'update']],
+
             // username rules
             'usernameTrim'     => ['username', 'trim'],
             'usernameRequired' => ['username', 'required', 'on' => ['register', 'create', 'connect', 'update']],
@@ -564,5 +569,10 @@ class User extends ActiveRecord implements IdentityInterface
     public static function findIdentityByAccessToken($token, $type = null)
     {
         throw new NotSupportedException('Method "' . __CLASS__ . '::' . __METHOD__ . '" is not implemented.');
+    }
+    
+    /** @inheritdoc */
+    public function getFullName(){
+        return $this->firstname." ".$this->lastname;
     }
 }
