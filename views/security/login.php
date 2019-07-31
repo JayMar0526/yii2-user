@@ -20,18 +20,17 @@ use yii\widgets\ActiveForm;
  * @var dektrium\user\Module $module
  */
 
-$this->title = Yii::t('user', 'Sign in');
-$this->params['breadcrumbs'][] = $this->title;
 ?>
 
 <?= $this->render('/_alert', ['module' => Yii::$app->getModule('user')]) ?>
-
+<br><br><br><br><br>
 <div class="row">
+    <p class="text-center" style="margin-bottom: 2%">
+        <?= Html::img('@web/images/Logo.png',['width' => '300px', 'height' => '70px'], ['alt'=>'Lesson']) ?>
+    </p>
+
     <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3">
         <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title"><?= Html::encode($this->title) ?></h3>
-            </div>
             <div class="panel-body">
                 <?php $form = ActiveForm::begin([
                     'id' => 'login-form',
@@ -92,12 +91,12 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
         </div>
         <?php if ($module->enableConfirmation): ?>
-            <p class="text-center">
+            <p class="text-center hidden">
                 <?= Html::a(Yii::t('user', 'Didn\'t receive confirmation message?'), ['/user/registration/resend']) ?>
             </p>
         <?php endif ?>
         <?php if ($module->enableRegistration): ?>
-            <p class="text-center">
+            <p class="text-center hidden">
                 <?= Html::a(Yii::t('user', 'Don\'t have an account? Sign up!'), ['/user/registration/register']) ?>
             </p>
         <?php endif ?>
