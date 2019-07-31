@@ -25,6 +25,12 @@ class UserSearch extends Model
     public $id;
 
     /** @var string */
+    public $lastname;
+
+    /** @var string */
+    public $firstname;
+
+    /** @var string */
     public $username;
 
     /** @var string */
@@ -56,7 +62,7 @@ class UserSearch extends Model
     public function rules()
     {
         return [
-            'fieldsSafe' => [['id', 'username', 'email', 'registration_ip', 'created_at', 'last_login_at'], 'safe'],
+            'fieldsSafe' => [['id', 'lastname', 'firstname', 'username', 'email', 'registration_ip', 'created_at', 'last_login_at'], 'safe'],
             'createdDefault' => ['created_at', 'default', 'value' => null],
             'lastloginDefault' => ['last_login_at', 'default', 'value' => null],
         ];
@@ -67,6 +73,8 @@ class UserSearch extends Model
     {
         return [
             'id'              => Yii::t('user', '#'),
+            'lastname'        => Yii::t('user', 'Lastname'),
+            'firstname'        => Yii::t('user', 'Firstname'),
             'username'        => Yii::t('user', 'Username'),
             'email'           => Yii::t('user', 'Email'),
             'created_at'      => Yii::t('user', 'Registration time'),
@@ -103,6 +111,8 @@ class UserSearch extends Model
 
         $query->andFilterWhere(['like', $table_name . '.username', $this->username])
               ->andFilterWhere(['like', $table_name . '.email', $this->email])
+              ->andFilterWhere(['like', $table_name . '.lastname', $this->lastname])
+              ->andFilterWhere(['like', $table_name . '.firstname', $this->firstname])
               ->andFilterWhere([$table_name . '.id' => $this->id])
               ->andFilterWhere([$table_name . '.registration_ip' => $this->registration_ip]);
 
