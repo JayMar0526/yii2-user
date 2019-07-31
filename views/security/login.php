@@ -26,7 +26,7 @@ use yii\widgets\ActiveForm;
 <br><br><br><br><br>
 <div class="row">
     <p class="text-center" style="margin-bottom: 2%">
-        <?= Html::img('@web/images/Logo.png',['width' => '300px', 'height' => '70px'], ['alt'=>'Lesson']) ?>
+        <?= Html::img('@web/images/Logo.png',['width' => '500px', 'height' => '100px'], ['alt'=>'Lesson']) ?>
     </p>
 
     <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3">
