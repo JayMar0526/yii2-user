@@ -11,6 +11,7 @@
 
 namespace dektrium\user\controllers;
 
+use yii;
 use dektrium\user\Finder;
 use dektrium\user\models\RecoveryForm;
 use dektrium\user\models\Token;
@@ -91,6 +92,7 @@ class RecoveryController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     ['allow' => true, 'actions' => ['request', 'reset'], 'roles' => ['?']],
+                    ['allow' => true, 'actions' => ['change-password'], 'roles' => ['@']],
                 ],
             ],
         ];
@@ -140,7 +142,7 @@ class RecoveryController extends Controller
      * @return string
      * @throws \yii\web\NotFoundHttpException
      */
-    public function actionReset($id, $code)
+    public function actionReset($id = null, $code = null)
     {
         if (!$this->module->enablePasswordRecovery) {
             throw new NotFoundHttpException();
@@ -167,6 +169,9 @@ class RecoveryController extends Controller
             ]);
         }
 
+
+        
+
         /** @var RecoveryForm $model */
         $model = \Yii::createObject([
             'class'    => RecoveryForm::className(),
@@ -186,6 +191,39 @@ class RecoveryController extends Controller
         }
 
         return $this->render('reset', [
+            'model' => $model,
+        ]);
+    }
+
+    /**
+     * Shows page where user can change password.
+     *
+     * @return string
+     * @throws \yii\web\NotFoundHttpException
+     */
+    public function actionChangePassword()
+    {
+        /** @var RecoveryForm $model */
+        $model = \Yii::createObject([
+            'class'    => RecoveryForm::className(),
+            'scenario' => RecoveryForm::SCENARIO_RESET,
+        ]);
+        
+        if($model->load(\Yii::$app->getRequest()->post())) {
+            $user = \dektrium\user\models\User::findOne(['id' => Yii::$app->user->identity->id]);
+            
+            if($user->resetPassword($model->password)) {
+                \Yii::$app->getSession()->setFlash('success', \Yii::t('user', 'Your password has been changed successfully'));
+            } else {
+                \Yii::$app->getSession()->setFlash('success', \Yii::t('user', 'An error occurred and your password has not been changed. Please try again later.'));
+            }
+
+            return $this->render('change-password', [
+                'model' => $model
+            ]);
+        }
+
+        return $this->render('change-password', [
             'model' => $model,
         ]);
     }
