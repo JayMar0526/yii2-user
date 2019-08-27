@@ -25,9 +25,11 @@ use yii\widgets\ActiveForm;
 <?= $this->render('/_alert', ['module' => Yii::$app->getModule('user')]) ?>
 <br><br><br><br><br>
 <div class="row">
+    <div class='col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3'>
     <p class="text-center" style="margin-bottom: 2%">
-        <?= Html::img('@web/images/Logo.png',['width' => '500px', 'height' => '100px'], ['alt'=>'Lesson']) ?>
+        <?= Html::img('@web/images/Logo.png',['width' => '100%;','height' => '100%'], ['alt'=>'Lesson', 'class' => 'img-responsive']) ?>
     </p>
+    </div>
 
     <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3">
         <div class="panel panel-default">

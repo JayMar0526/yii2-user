@@ -169,9 +169,6 @@ class RecoveryController extends Controller
             ]);
         }
 
-
-        
-
         /** @var RecoveryForm $model */
         $model = \Yii::createObject([
             'class'    => RecoveryForm::className(),
@@ -211,7 +208,7 @@ class RecoveryController extends Controller
         
         if($model->load(\Yii::$app->getRequest()->post())) {
             $user = \dektrium\user\models\User::findOne(['id' => Yii::$app->user->identity->id]);
-            
+
             if($user->resetPassword($model->password)) {
                 \Yii::$app->getSession()->setFlash('success', \Yii::t('user', 'Your password has been changed successfully'));
             } else {
