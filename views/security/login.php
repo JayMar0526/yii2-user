@@ -19,6 +19,7 @@ use yii\widgets\ActiveForm;
  * @var dektrium\user\models\LoginForm $model
  * @var dektrium\user\Module $module
  */
+$this->title = 'Tathva International School';
 
 ?>
 
