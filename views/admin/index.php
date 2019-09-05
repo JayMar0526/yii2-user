@@ -95,6 +95,13 @@ $this->params['breadcrumbs'][] = $this->title;
             'visible' => Yii::$app->getModule('user')->enableConfirmation,
         ],
         [
+            'header' => Yii::t('user', 'Has Role?'),
+            'value' =>  function ($model) {
+                return Html::a($model->hasRole,['/user/admin/assignments','id' => $model->id],['title' => 'Click to view assigned roles and permissions', 'class' => 'btn btn-xs btn-'.(($model->hasRole == 'Yes') ? 'info' : 'default').' btn-block']);
+            },
+            'format' => 'raw',
+        ],
+        [
             'header' => Yii::t('user', 'Block status'),
             'value' => function ($model) {
                 if ($model->isBlocked) {

@@ -11,6 +11,7 @@
 
 namespace dektrium\user\models;
 
+use Yii;
 use dektrium\user\Finder;
 use dektrium\user\helpers\Password;
 use dektrium\user\Mailer;
@@ -574,5 +575,16 @@ class User extends ActiveRecord implements IdentityInterface
     /** @inheritdoc */
     public function getFullName(){
         return $this->firstname." ".$this->lastname;
+    }
+
+    public function getHasRole()
+    {
+        $manager = Yii::$app->authManager;
+
+        $assignedItems = $manager->getItemsByUser($this->id);
+
+        $hasRole = $assignedItems ? 'Yes' : 'No';
+
+        return $hasRole;
     }
 }
