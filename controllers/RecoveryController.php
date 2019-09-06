@@ -212,7 +212,7 @@ class RecoveryController extends Controller
             if($user->resetPassword($model->password)) {
                 \Yii::$app->getSession()->setFlash('success', \Yii::t('user', 'Your password has been changed successfully'));
             } else {
-                \Yii::$app->getSession()->setFlash('success', \Yii::t('user', 'An error occurred and your password has not been changed. Please try again later.'));
+                \Yii::$app->getSession()->setFlash('danger', \Yii::t('user', 'An error occurred and your password has not been changed. Please try again later.'));
             }
 
             return $this->render('change-password', [

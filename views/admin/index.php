@@ -29,7 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <?= $this->render('/_alert', ['module' => Yii::$app->getModule('user')]) ?>
 
 <?= $this->render('/admin/_menu') ?>
-
+<div class='table-responsive'>
 <?php Pjax::begin() ?>
 
 <?= GridView::widget([
@@ -147,3 +147,4 @@ $this->params['breadcrumbs'][] = $this->title;
 ]); ?>
 
 <?php Pjax::end() ?>
+</div>
