@@ -19,10 +19,14 @@ $this->title = Yii::t('user', 'Change your password');
             </div>
             <div class="panel-body">
                 <?php $form = ActiveForm::begin([
-                    'id' => 'password-recovery-form',
+                    'id' => 'password-recovery-form'
                 ]); ?>
 
-                <?= $form->field($model, 'password')->passwordInput()->label('New password') ?>
+                <?= $form->field($model, 'currentPassword')->passwordInput()->label('Current password') ?>
+                
+                <?= $form->field($model, 'newPassword')->passwordInput()->label('New password') ?>
+
+                <?= $form->field($model, 'confirmPassword')->passwordInput()->label('Confirm password') ?>                
 
                 <?= Html::submitButton(Yii::t('user', 'Save'), ['class' => 'btn btn-success btn-block']) ?><br>
 
