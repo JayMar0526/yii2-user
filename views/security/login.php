@@ -70,13 +70,6 @@ use yii\widgets\ActiveForm;
                         ->passwordInput()
                         ->label(
                             Yii::t('user', 'Password')
-                            . ($module->enablePasswordRecovery ?
-                                ' (' . Html::a(
-                                    Yii::t('user', 'Forgot password?'),
-                                    ['/user/recovery/request'],
-                                    ['tabindex' => '5']
-                                )
-                                . ')' : '')
                         ) ?>
                 <?php endif ?>
 
