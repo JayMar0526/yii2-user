@@ -24,6 +24,7 @@ class RecoveryForm extends Model
 {
     const SCENARIO_REQUEST = 'request';
     const SCENARIO_RESET = 'reset';
+    const SCENARIO_RECOVER = 'recover';
 
     /**
      * @var string
@@ -34,6 +35,21 @@ class RecoveryForm extends Model
      * @var string
      */
     public $password;
+
+    /**
+     * @var string
+     */
+    public $currentPassword;
+
+    /**
+     * @var string
+     */
+    public $newPassword;
+
+    /**
+     * @var string
+     */
+    public $confirmPassword;
 
     /**
      * @var Mailer
@@ -65,6 +81,9 @@ class RecoveryForm extends Model
         return [
             'email'    => \Yii::t('user', 'Email'),
             'password' => \Yii::t('user', 'Password'),
+            'currentPassword' => 'Current Password',
+            'newPassword' => 'New Password',
+            'confirmPassword' => 'Confirm New Password',
         ];
     }
 
@@ -76,6 +95,7 @@ class RecoveryForm extends Model
         return [
             self::SCENARIO_REQUEST => ['email'],
             self::SCENARIO_RESET => ['password'],
+            self::SCENARIO_RECOVER => ['newPassword', 'confirmPassword', 'currentPassword'],
         ];
     }
 
@@ -85,6 +105,8 @@ class RecoveryForm extends Model
     public function rules()
     {
         return [
+            [['newPassword', 'confirmPassword', 'currentPassword'], 'required', 'on' => self::SCENARIO_RECOVER],
+            ['confirmPassword', 'compare', 'compareAttribute' => 'newPassword'],
             'emailTrim' => ['email', 'trim'],
             'emailRequired' => ['email', 'required'],
             'emailPattern' => ['email', 'email'],
