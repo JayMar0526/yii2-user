@@ -11,6 +11,7 @@
 
 namespace dektrium\user\models;
 
+use dektrium\rbac\models\Assignment;
 use dektrium\user\Finder;
 use dektrium\user\helpers\Password;
 use dektrium\user\Mailer;
@@ -574,5 +575,15 @@ class User extends ActiveRecord implements IdentityInterface
     /** @inheritdoc */
     public function getFullName(){
         return $this->firstname." ".$this->lastname;
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getAssignments()
+    {
+        $return = \Yii::createObject(['class' => Assignment::className(), 'user_id' => $this->id]);
+        // echo '<pre>'; print_r($return); exit;
+        return $return;
     }
 }

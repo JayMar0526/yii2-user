@@ -39,10 +39,9 @@ $this->params['breadcrumbs'][] = $this->title;
     'columns' => [
         [
             'attribute' => 'id',
-            'headerOptions' => ['style' => 'width:90px;'], # 90px is sufficient for 5-digit user ids
+            'headerOptions' => ['style' => 'width:30px;'], # 90px is sufficient for 5-digit user ids
         ],
         'fullName',
-        'username',
         'email:email',
         [
             'attribute' => 'registration_ip',
@@ -75,6 +74,21 @@ $this->params['breadcrumbs'][] = $this->title;
                 return date('Y-m-d G:i:s', $model->last_login_at);
             }
           },
+        ],
+        [
+            'header' => Yii::t('user', 'Role'),
+            'value' => function ($model) {
+                if ($model->assignments->items) {
+                    return Html::a(Yii::t('user', 'Yes'), ['/user/admin/assignments', 'id' => $model->id], [
+                        'class' => 'btn btn-xs btn-info btn-block'
+                    ]);
+                } else {
+                    return Html::a(Yii::t('user', 'No'), ['/user/admin/assignments', 'id' => $model->id], [
+                        'class' => 'btn btn-xs btn-warning btn-block'
+                    ]);
+                }
+            },
+            'format' => 'raw',
         ],
         [
             'header' => Yii::t('user', 'Confirmation'),
