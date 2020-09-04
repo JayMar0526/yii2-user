@@ -462,6 +462,27 @@ class AdminController extends Controller
      *
      * @return Response
      */
+    public function actionSendCredential($id)
+    {
+        $user = $this->findModel($id);
+        if ($user->isAdmin) {
+            throw new ForbiddenHttpException(Yii::t('user', 'Sending credential is not possible for admin users'));
+        }
+
+        if ($user->sendCredential()) {
+            Yii::$app->session->setFlash('success', \Yii::t('user', 'Account has been sent to user'));
+        } else {
+            Yii::$app->session->setFlash('danger', \Yii::t('user', 'Error while trying to send the credential'));
+        }
+
+        return $this->redirect(Url::previous('actions-redirect'));
+    }
+
+    /**
+     * Generates a new password and sends it to the user.
+     *
+     * @return Response
+     */
     public function actionResendPassword($id)
     {
         $user = $this->findModel($id);

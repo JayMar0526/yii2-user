@@ -129,13 +129,21 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
         [
             'class' => 'yii\grid\ActionColumn',
-            'template' => '{switch} {resend_password} {update} {delete}',
+            'template' => '{switch} {send_credential} {resend_password} {update} {delete}',
             'buttons' => [
+                'send_credential' => function ($url, $model, $key) {
+                    if (\Yii::$app->user->identity->isAdmin && !$model->isAdmin) {
+                        return '
+                    <a data-method="POST" data-confirm="' . Yii::t('user', 'Are you sure?') . '" href="' . Url::to(['send-credential', 'id' => $model->id]) . '">
+                    <span title="' . Yii::t('user', 'Send login credential') . '" class="glyphicon glyphicon-send">
+                    </span> </a>';
+                    }
+                },
                 'resend_password' => function ($url, $model, $key) {
                     if (\Yii::$app->user->identity->isAdmin && !$model->isAdmin) {
                         return '
                     <a data-method="POST" data-confirm="' . Yii::t('user', 'Are you sure?') . '" href="' . Url::to(['resend-password', 'id' => $model->id]) . '">
-                    <span title="' . Yii::t('user', 'Generate and send new password to user') . '" class="glyphicon glyphicon-envelope">
+                    <span title="' . Yii::t('user', 'Generate and send new password to user') . '" class="glyphicon glyphicon-lock">
                     </span> </a>';
                     }
                 },

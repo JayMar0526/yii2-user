@@ -288,8 +288,7 @@ class User extends ActiveRecord implements IdentityInterface
             }
 
             $this->confirm();
-
-            $this->mailer->sendWelcomeMessage($this, null, true);
+            // $this->mailer->sendWelcomeMessage($this, null, true);
             $this->trigger(self::AFTER_CREATE);
 
             $transaction->commit();
@@ -373,6 +372,41 @@ class User extends ActiveRecord implements IdentityInterface
         \Yii::$app->session->setFlash($success ? 'success' : 'danger', $message);
 
         return $success;
+    }
+
+    /**
+     * Generates a new password and sends it to the user.
+     *
+     * @param string $code Confirmation code.
+     *
+     * @return boolean
+     */
+    public function sendCredential()
+    {
+        $transaction = $this->getDb()->beginTransaction();
+
+        try {
+            $this->password = ($this->password == null && $this->module->enableGeneratingPassword) ? Password::generate(8) : $this->password;
+
+            $this->trigger(self::BEFORE_CREATE);
+
+            if (!$this->save()) {
+                $transaction->rollBack();
+                return false;
+            }
+
+            $this->confirm();
+            $this->mailer->sendWelcomeMessage($this, null, true);
+            $this->trigger(self::AFTER_CREATE);
+
+            $transaction->commit();
+
+            return true;
+        } catch (\Exception $e) {
+            $transaction->rollBack();
+            \Yii::warning($e->getMessage());
+            throw $e;
+        }
     }
 
     /**

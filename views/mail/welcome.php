@@ -19,15 +19,25 @@ use yii\helpers\Html;
  */
 ?>
 <p style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 1.6; font-weight: normal; margin: 0 0 10px; padding: 0;">
-    <?= Yii::t('user', 'Hello') ?>,
+    <?= Yii::t('user', 'Hello {0}', $user->firstname) ?>,
 </p>
 
 <p style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 1.6; font-weight: normal; margin: 0 0 10px; padding: 0;">
-    <?= Yii::t('user', 'Your account on {0} has been created', Yii::$app->name) ?>.
+    Your account on UIA Connect has been created. <br>
+    The enclosed information is designed to serve as login credentials for internal system being used in the organization.<br><br>
     <?php if ($showPassword || $module->enableGeneratingPassword): ?>
-        <?= Yii::t('user', 'We have generated a password for you') ?>: <strong><?= $user->password ?></strong>
+        Please enter the login credential below:<br>
+        <strong>URL: </strong> <a href="https://uiaconnect.com/frontend/web/user/recovery/change-password">https://uiaconnect.com</a><br>
+        <strong>Email : </strong> <?= $user->email ?><br>
+        <strong>Password: </strong> <?= $user->password ?><br><br>
     <?php endif ?>
+    Kindly note that these credentials are case-sensitive and employee specific and for security reasons should not be shared with anyone.<br><br>
+    
+    These credentials are system generated hence it is recommended to change the same after the first successful login to portals.	<br><br>
+    
+    In case of any technical issue, please feel free to write at admin@uiaconnect.com <br><br>
 
+    Thank you!
 </p>
 
 <?php if ($token !== null): ?>
@@ -41,7 +51,6 @@ use yii\helpers\Html;
         <?= Yii::t('user', 'If you cannot click the link, please try pasting the text into your browser') ?>.
     </p>
 <?php endif ?>
-
 <p style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 1.6; font-weight: normal; margin: 0 0 10px; padding: 0;">
     <?= Yii::t('user', 'If you did not make this request you can ignore this email') ?>.
 </p>
