@@ -69,10 +69,10 @@ use yii\widgets\ActiveForm;
                         ['inputOptions' => ['class' => 'form-control', 'tabindex' => '2']])
                         ->passwordInput()
                         ->label(
-                            Yii::t('user', 'Password')
+                            Yii::t('user', 'Password <a class="text text-primary text-center" title="How to retrieve password?" data-toggle="popover" data-content="If you have forgotten the password, please contact your IT Administrator.">(Forgot password?)</a>')
                         ) ?>
                 <?php endif ?>
-
+                
                 <?= $form->field($model, 'rememberMe')->checkbox(['tabindex' => '3']) ?>
 
                 <?= Html::submitButton(
